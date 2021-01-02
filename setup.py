@@ -15,10 +15,10 @@ setup(
                   'DataGenerator.CorpusGenerator': ['*.pxd', '*.pyx', '*.c'],
                   'DataGenerator.DatasetGenerator': ['*.pxd', '*.pyx', '*.c'],
                   'DataGenerator.InstanceGenerator': ['*.pxd', '*.pyx', '*.c']},
-    url='https://github.com/olcaytaner/DataGenerator-Cy',
+    url='https://github.com/StarlangSoftware/DataGenerator-Cy',
     license='',
     author='olcaytaner',
-    author_email='olcaytaner@isikun.edu.tr',
+    author_email='olcay.yildiz@ozyegin.edu.tr',
     description='Classification dataset generator library for high level Nlp tasks',
     install_requires=['NlpToolkit-AnnotatedSentence-Cy', 'NlpToolkit-AnnotatedTree-Cy', 'NlpToolkit-Classification-Cy',
                       'NlpToolkit-MorphologicalDisambiguation-Cy']
