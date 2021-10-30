@@ -3,8 +3,8 @@ from AnnotatedTree.TreeBankDrawable cimport TreeBankDrawable
 from AnnotatedTree.ParseTreeDrawable cimport ParseTreeDrawable
 from AnnotatedSentence.AnnotatedSentence cimport AnnotatedSentence
 from AnnotatedSentence.AnnotatedWord cimport AnnotatedWord
-from MorphologicalDisambiguation.DisambiguatedWord cimport DisambiguatedWord
-from MorphologicalDisambiguation.DisambiguationCorpus cimport DisambiguationCorpus
+from DisambiguationCorpus.DisambiguatedWord cimport DisambiguatedWord
+from DisambiguationCorpus.DisambiguationCorpus cimport DisambiguationCorpus
 
 
 cdef class TreeDisambiguationCorpusGenerator:

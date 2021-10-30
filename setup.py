@@ -1,4 +1,8 @@
-from distutils.core import setup
+from setuptools import setup
+
+from pathlib import Path
+this_directory = Path(__file__).parent
+long_description = (this_directory / "README.md").read_text()
 from Cython.Build import cythonize
 
 setup(
@@ -8,7 +12,7 @@ setup(
                            "DataGenerator/DatasetGenerator/*.pyx"],
                           compiler_directives={'language_level': "3"}),
     name='NlpToolkit-DataGenerator-Cy',
-    version='1.0.0',
+    version='1.0.1',
     packages=['DataGenerator', 'DataGenerator.Attribute', 'DataGenerator.CorpusGenerator',
               'DataGenerator.DatasetGenerator', 'DataGenerator.InstanceGenerator'],
     package_data={'DataGenerator.Attribute': ['*.pxd', '*.pyx', '*.c'],
@@ -21,5 +25,7 @@ setup(
     author_email='olcay.yildiz@ozyegin.edu.tr',
     description='Classification dataset generator library for high level Nlp tasks',
     install_requires=['NlpToolkit-AnnotatedSentence-Cy', 'NlpToolkit-AnnotatedTree-Cy', 'NlpToolkit-Classification-Cy',
-                      'NlpToolkit-MorphologicalDisambiguation-Cy']
+                      'NlpToolkit-MorphologicalDisambiguation-Cy'],
+    long_description=long_description,
+    long_description_content_type='text/markdown'
 )

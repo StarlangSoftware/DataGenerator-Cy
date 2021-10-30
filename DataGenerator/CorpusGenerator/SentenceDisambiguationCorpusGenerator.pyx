@@ -1,9 +1,8 @@
 from AnnotatedSentence.AnnotatedSentence cimport AnnotatedSentence
 from AnnotatedSentence.AnnotatedWord cimport AnnotatedWord
 from AnnotatedSentence.AnnotatedCorpus cimport AnnotatedCorpus
-from MorphologicalDisambiguation.DisambiguatedWord cimport DisambiguatedWord
-from MorphologicalDisambiguation.DisambiguationCorpus cimport DisambiguationCorpus
-
+from DisambiguationCorpus.DisambiguatedWord cimport DisambiguatedWord
+from DisambiguationCorpus.DisambiguationCorpus cimport DisambiguationCorpus
 
 cdef class SentenceDisambiguationCorpusGenerator:
 
