@@ -1,6 +1,11 @@
 Data Generator
 ============
 
+Video Lectures
+============
+
+[<img src=https://github.com/StarlangSoftware/DataGenerator/blob/master/video1.jpg width="50%">](https://youtu.be/E9rE_eCffPE)
+
 For Developers
 ============
 You can also see [Python](https://github.com/starlangsoftware/DataGenerator-Py), [Java](https://github.com/starlangsoftware/DataGenerator), [Js](https://github.com/starlangsoftware/DataGenerator-Js), [C++](https://github.com/starlangsoftware/DataGenerator-CPP),  or [C#](https://github.com/starlangsoftware/DataGenerator-CS) repository.
