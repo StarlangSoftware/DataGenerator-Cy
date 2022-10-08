@@ -1,12 +1,20 @@
 cdef class SimpleWindowInstanceGenerator(InstanceGenerator):
 
-    cpdef addAttributesForWords(self, Instance current, Sentence sentence, int wordIndex):
+    cpdef addAttributesForWords(self,
+                                Instance current,
+                                Sentence sentence,
+                                int wordIndex):
         pass
 
-    cpdef addAttributesForEmptyWords(self, Instance current, str emptyWord):
+    cpdef addAttributesForEmptyWords(self,
+                                     Instance current,
+                                     str emptyWord):
         pass
 
-    cpdef addAttributes(self, Instance current, Sentence sentence, int wordIndex):
+    cpdef addAttributes(self,
+                        Instance current,
+                        Sentence sentence,
+                        int wordIndex):
         """
         addAttributes adds all attributes of the previous words, the current wordn, and next words of the given word
         to the given instance. If the previous or next words does not exists, the method calls
@@ -24,13 +32,13 @@ cdef class SimpleWindowInstanceGenerator(InstanceGenerator):
             The index of the word in the sentence.
         """
         cdef int i
-        for i in range(self.windowSize):
-            if wordIndex - self.windowSize + i >= 0:
-                self.addAttributesForWords(current, sentence, wordIndex - self.windowSize + i)
+        for i in range(self.window_size):
+            if wordIndex - self.window_size + i >= 0:
+                self.addAttributesForWords(current, sentence, wordIndex - self.window_size + i)
             else:
                 self.addAttributesForEmptyWords(current, "<s>")
             self.addAttributesForWords(current, sentence, wordIndex)
-        for i in range(self.windowSize):
+        for i in range(self.window_size):
             if wordIndex + i + 1 < sentence.wordCount():
                 self.addAttributesForWords(current, sentence, wordIndex + i + 1)
             else:

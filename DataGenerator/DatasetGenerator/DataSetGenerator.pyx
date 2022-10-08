@@ -3,7 +3,10 @@ from AnnotatedSentence.AnnotatedSentence cimport AnnotatedSentence
 
 cdef class DataSetGenerator:
 
-    def __init__(self, folder: str, pattern: str, instanceGenerator: InstanceGenerator):
+    def __init__(self,
+                 folder: str,
+                 pattern: str,
+                 instanceGenerator: InstanceGenerator):
         """
         Constructor for the DataSetGenerator which takes input the data directory, the pattern for the training files
         included, and an instanceGenerator. The constructor loads the treebank from the given directory
@@ -19,8 +22,8 @@ cdef class DataSetGenerator:
         instanceGenerator : InstanceGenerator
             The instance generator used to generate the dataset.
         """
-        self.__treeBank = TreeBankDrawable(folder, pattern)
-        self.instanceGenerator = instanceGenerator
+        self.__tree_bank = TreeBankDrawable(folder, pattern)
+        self.__instance_generator = instanceGenerator
 
     cpdef setInstanceGenerator(self, InstanceGenerator instanceGenerator):
         """
@@ -31,7 +34,7 @@ cdef class DataSetGenerator:
         instanceGenerator : InstanceGenerator
             Input instanceGenerator
         """
-        self.instanceGenerator = instanceGenerator
+        self.__instance_generator = instanceGenerator
 
     cpdef list generateInstanceListFromTree(self, ParseTreeDrawable parseTree):
         """
@@ -48,16 +51,16 @@ cdef class DataSetGenerator:
         list
             A list of instances.
         """
-        cdef list instanceList
-        cdef AnnotatedSentence annotatedSentence, generatedSentence
+        cdef list instance_list
+        cdef AnnotatedSentence annotated_sentence, generated_sentence
         cdef int i
-        instanceList = []
-        annotatedSentence = parseTree.generateAnnotatedSentence()
-        for i in range(annotatedSentence.wordCount()):
-            generatedSentence = self.instanceGenerator.generateInstanceFromSentence(annotatedSentence, i)
-            if generatedSentence is not None:
-                instanceList.append(generatedSentence)
-        return instanceList
+        instance_list = []
+        annotated_sentence = parseTree.generateAnnotatedSentence()
+        for i in range(annotated_sentence.wordCount()):
+            generated_sentence = self.__instance_generator.generateInstanceFromSentence(annotated_sentence, i)
+            if generated_sentence is not None:
+                instance_list.append(generated_sentence)
+        return instance_list
 
     cpdef DataSet generate(self):
         """
@@ -68,11 +71,11 @@ cdef class DataSetGenerator:
         DataSet
             Created dataset.
         """
-        cdef DataSet dataSet
+        cdef DataSet data_set
         cdef int i
-        cdef ParseTreeDrawable parseTree
-        dataSet = DataSet()
-        for i in range(self.__treeBank.size()):
-            parseTree = self.__treeBank.get(i)
-            dataSet.addInstanceList(self.generateInstanceListFromTree(parseTree))
-        return dataSet
+        cdef ParseTreeDrawable parse_tree
+        data_set = DataSet()
+        for i in range(self.__tree_bank.size()):
+            parse_tree = self.__tree_bank.get(i)
+            data_set.addInstanceList(self.generateInstanceListFromTree(parse_tree))
+        return data_set

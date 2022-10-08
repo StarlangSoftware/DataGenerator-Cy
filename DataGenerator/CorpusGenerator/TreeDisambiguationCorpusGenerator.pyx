@@ -9,9 +9,11 @@ from DisambiguationCorpus.DisambiguationCorpus cimport DisambiguationCorpus
 
 cdef class TreeDisambiguationCorpusGenerator:
 
-    cdef TreeBankDrawable __treeBank
+    cdef TreeBankDrawable __tree_bank
 
-    def __init__(self, folder: str, pattern: str):
+    def __init__(self,
+                 folder: str,
+                 pattern: str):
         """
         Constructor for the DisambiguationCorpusGenerator which takes input the data directory and the pattern for the
         training files included. The constructor loads the treebank from the given directory including the given files
@@ -24,7 +26,7 @@ cdef class TreeDisambiguationCorpusGenerator:
         pattern : str
             Pattern of the tree files to be included in the treebank. Use "." for all files.
         """
-        self.__treeBank = TreeBankDrawable(folder, pattern)
+        self.__tree_bank = TreeBankDrawable(folder, pattern)
 
     cpdef DisambiguationCorpus generate(self):
         """
@@ -38,19 +40,19 @@ cdef class TreeDisambiguationCorpusGenerator:
         """
         cdef DisambiguationCorpus corpus
         cdef int i
-        cdef ParseTreeDrawable parseTree
-        cdef AnnotatedSentence sentence, disambiguationSentence
-        cdef AnnotatedWord annotatedWord
+        cdef ParseTreeDrawable parse_tree
+        cdef AnnotatedSentence sentence, disambiguation_sentence
+        cdef AnnotatedWord annotated_word
         corpus = DisambiguationCorpus()
-        for i in range(self.__treeBank.size()):
-            parseTree = self.__treeBank.get(i)
-            if parseTree.layerAll(ViewLayerType.INFLECTIONAL_GROUP):
-                sentence = parseTree.generateAnnotatedSentence()
-                disambiguationSentence = AnnotatedSentence()
+        for i in range(self.__tree_bank.size()):
+            parse_tree = self.__tree_bank.get(i)
+            if parse_tree.layerAll(ViewLayerType.INFLECTIONAL_GROUP):
+                sentence = parse_tree.generateAnnotatedSentence()
+                disambiguation_sentence = AnnotatedSentence()
                 for j in range(sentence.wordCount()):
-                    annotatedWord = sentence.getWord(j)
-                    if isinstance(annotatedWord, AnnotatedWord):
-                        disambiguationSentence.addWord(DisambiguatedWord(annotatedWord.getName(),
-                                                                         annotatedWord.getParse()))
-                corpus.addSentence(disambiguationSentence)
+                    annotated_word = sentence.getWord(j)
+                    if isinstance(annotated_word, AnnotatedWord):
+                        disambiguation_sentence.addWord(DisambiguatedWord(annotated_word.getName(),
+                                                                         annotated_word.getParse()))
+                corpus.addSentence(disambiguation_sentence)
         return corpus

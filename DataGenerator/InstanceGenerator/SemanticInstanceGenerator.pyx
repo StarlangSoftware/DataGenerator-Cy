@@ -6,7 +6,9 @@ from WordNet.SynSet cimport SynSet
 
 cdef class SemanticInstanceGenerator(SimpleWindowInstanceGenerator):
 
-    def __init__(self, fsm: FsmMorphologicalAnalyzer, wordNet: WordNet):
+    def __init__(self,
+                 fsm: FsmMorphologicalAnalyzer,
+                 wordNet: WordNet):
         """
         Constructor for the semantic instance generator. Takes morphological analyzer and wordnet as input to set the
         corresponding variables.
@@ -19,9 +21,12 @@ cdef class SemanticInstanceGenerator(SimpleWindowInstanceGenerator):
             Wordnet to be used.
         """
         self.__fsm = fsm
-        self.__wordNet = wordNet
+        self.__word_net = wordNet
 
-    cpdef addAttributesForWords(self, Instance current, Sentence sentence, int wordIndex):
+    cpdef addAttributesForWords(self,
+                                Instance current,
+                                Sentence sentence,
+                                int wordIndex):
         """
         Generates a single classification instance of the WSD problem for the given word of the given sentence. If the
         word has not been labeled with sense tag yet, the method returns null. In the WSD problem, the system also
@@ -42,24 +47,28 @@ cdef class SemanticInstanceGenerator(SimpleWindowInstanceGenerator):
         """
         pass
 
-    cpdef addAttributesForEmptyWords(self, Instance current, str emptyWord):
+    cpdef addAttributesForEmptyWords(self,
+                                     Instance current,
+                                     str emptyWord):
         pass
 
-    cpdef Instance generateInstanceFromSentence(self, Sentence sentence, int wordIndex):
-        cdef list possibleSynSets, possibleClassLabels
+    cpdef Instance generateInstanceFromSentence(self,
+                                                Sentence sentence,
+                                                int wordIndex):
+        cdef list possible_syn_sets, possible_class_labels
         cdef AnnotatedWord word
-        cdef str classLabel
+        cdef str class_label
         cdef CompositeInstance current
-        cdef SynSet synSet
+        cdef SynSet syn_set
         if isinstance(sentence, AnnotatedSentence):
-            possibleSynSets = sentence.constructSynSets(self.__wordNet, self.__fsm, wordIndex)
+            possible_syn_sets = sentence.constructSynSets(self.__word_net, self.__fsm, wordIndex)
             word = sentence.getWord(wordIndex)
             if isinstance(word, AnnotatedWord):
-                classLabel = word.getSemantic()
-                current = CompositeInstance(classLabel)
-                possibleClassLabels = []
-                for synSet in possibleSynSets:
-                    possibleClassLabels.append(synSet.getId())
-                current.setPossibleClassLabels(possibleClassLabels)
+                class_label = word.getSemantic()
+                current = CompositeInstance(class_label)
+                possible_class_labels = []
+                for synSet in possible_syn_sets:
+                    possible_class_labels.append(synSet.getId())
+                current.setPossibleClassLabels(possible_class_labels)
                 self.addAttributes(current, sentence, wordIndex)
                 return current

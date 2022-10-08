@@ -12,7 +12,7 @@ setup(
                            "DataGenerator/DatasetGenerator/*.pyx"],
                           compiler_directives={'language_level': "3"}),
     name='NlpToolkit-DataGenerator-Cy',
-    version='1.0.2',
+    version='1.0.3',
     packages=['DataGenerator', 'DataGenerator.Attribute', 'DataGenerator.CorpusGenerator',
               'DataGenerator.DatasetGenerator', 'DataGenerator.InstanceGenerator'],
     package_data={'DataGenerator.Attribute': ['*.pxd', '*.pyx', '*.c'],

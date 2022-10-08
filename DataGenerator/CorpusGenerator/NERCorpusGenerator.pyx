@@ -7,9 +7,11 @@ from AnnotatedSentence.AnnotatedSentence cimport AnnotatedSentence
 
 cdef class NERCorpusGenerator:
 
-    cdef TreeBankDrawable __treeBank
+    cdef TreeBankDrawable __tree_bank
 
-    def __init__(self, folder: str, pattern: str):
+    def __init__(self,
+                 folder: str,
+                 pattern: str):
         """
         Constructor for the NERCorpusGenerator which takes input the data directory and the pattern for the
         training files included. The constructor loads the treebank from the given directory including the given files
@@ -22,7 +24,7 @@ cdef class NERCorpusGenerator:
         pattern : str
             Pattern of the tree files to be included in the treebank. Use "." for all files.
         """
-        self.__treeBank = TreeBankDrawable(folder, pattern)
+        self.__tree_bank = TreeBankDrawable(folder, pattern)
 
     cpdef NERCorpus generate(self):
         """
@@ -36,12 +38,12 @@ cdef class NERCorpusGenerator:
         """
         cdef NERCorpus corpus
         cdef int i
-        cdef ParseTreeDrawable parseTree
+        cdef ParseTreeDrawable parse_tree
         cdef AnnotatedSentence sentence
         corpus = NERCorpus()
-        for i in range(self.__treeBank.size()):
-            parseTree = self.__treeBank.get(i)
-            if parseTree.layerAll(ViewLayerType.NER):
-                sentence = parseTree.generateAnnotatedSentence()
+        for i in range(self.__tree_bank.size()):
+            parse_tree = self.__tree_bank.get(i)
+            if parse_tree.layerAll(ViewLayerType.NER):
+                sentence = parse_tree.generateAnnotatedSentence()
                 corpus.addSentence(sentence)
         return corpus

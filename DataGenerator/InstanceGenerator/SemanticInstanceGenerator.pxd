@@ -8,7 +8,7 @@ from DataGenerator.InstanceGenerator.SimpleWindowInstanceGenerator cimport Simpl
 cdef class SemanticInstanceGenerator(SimpleWindowInstanceGenerator):
 
     cdef FsmMorphologicalAnalyzer __fsm
-    cdef WordNet __wordNet
+    cdef WordNet __word_net
 
     cpdef addAttributesForWords(self, Instance current, Sentence sentence, int wordIndex)
     cpdef addAttributesForEmptyWords(self, Instance current, str emptyWord)
